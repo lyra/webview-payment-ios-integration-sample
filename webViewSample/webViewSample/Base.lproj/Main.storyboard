@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina5_9" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="webViewSample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="XgK-To-WyS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2VO-fD-2ZV">
+                                <rect key="frame" x="25" y="221" width="325" height="370"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="  Amount" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YPh-gE-vmV">
+                                        <rect key="frame" x="11" y="0.0" width="303" height="53"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="53" id="Bom-s5-1bZ"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="303" id="wVb-GE-N3l"/>
+                                        </constraints>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="  Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e8f-oB-tnS">
+                                        <rect key="frame" x="11" y="63" width="303" height="53"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="53" id="Ray-QR-oDW"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="303" id="ae4-Mn-U6y"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="done"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gw9-0v-pgt">
+                                        <rect key="frame" x="11" y="209" width="303" height="53"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="53" id="D42-Kf-4zt"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="303" id="IEs-0G-BEJ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                        <state key="normal" title="Pay with PayZen">
+                                            <color key="titleColor" red="0.19440266489999999" green="0.2891131341" blue="0.50590610499999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="payAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HHc-fF-0t6"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yne-OO-NZO">
+                                        <rect key="frame" x="11" y="126" width="303" height="53"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="303" id="G84-fK-WIi"/>
+                                            <constraint firstAttribute="height" constant="53" id="sV8-1i-57g"/>
+                                        </constraints>
+                                        <state key="normal" title="All">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="selectCardType:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CKa-Jx-AzR"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="Yne-OO-NZO" firstAttribute="centerX" secondItem="2VO-fD-2ZV" secondAttribute="centerX" id="23a-22-xHw"/>
+                                    <constraint firstItem="YPh-gE-vmV" firstAttribute="top" secondItem="2VO-fD-2ZV" secondAttribute="top" id="4VL-VT-Rup"/>
+                                    <constraint firstItem="e8f-oB-tnS" firstAttribute="centerX" secondItem="2VO-fD-2ZV" secondAttribute="centerX" id="Fex-K8-R8r"/>
+                                    <constraint firstAttribute="height" constant="370" id="VyT-P4-wTv"/>
+                                    <constraint firstItem="e8f-oB-tnS" firstAttribute="top" secondItem="YPh-gE-vmV" secondAttribute="bottom" constant="10" id="WAI-EC-gGm"/>
+                                    <constraint firstItem="gw9-0v-pgt" firstAttribute="top" secondItem="Yne-OO-NZO" secondAttribute="bottom" constant="30" id="fbc-bn-Fdo"/>
+                                    <constraint firstItem="gw9-0v-pgt" firstAttribute="centerX" secondItem="2VO-fD-2ZV" secondAttribute="centerX" id="mw2-gu-lCp"/>
+                                    <constraint firstItem="Yne-OO-NZO" firstAttribute="top" secondItem="e8f-oB-tnS" secondAttribute="bottom" constant="10" id="r9I-8g-baS"/>
+                                    <constraint firstItem="YPh-gE-vmV" firstAttribute="centerX" secondItem="2VO-fD-2ZV" secondAttribute="centerX" id="tvN-cK-sVO"/>
+                                </constraints>
+                            </view>
+                            <view hidden="YES" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t3V-33-ZGD">
+                                <rect key="frame" x="0.0" y="5" width="375" height="812"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Z2A-Nc-SGs">
+                                        <rect key="frame" x="176.66666666666666" y="396" width="20" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.19440266489982605" green="0.28911313414573669" blue="0.50590610504150391" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="2VO-fD-2ZV" firstAttribute="centerY" secondItem="XgK-To-WyS" secondAttribute="centerY" id="2XI-qm-xpI"/>
+                            <constraint firstItem="2VO-fD-2ZV" firstAttribute="leading" secondItem="MLB-po-Iig" secondAttribute="leading" constant="25" id="2o9-AM-OHt"/>
+                            <constraint firstItem="t3V-33-ZGD" firstAttribute="centerY" secondItem="MLB-po-Iig" secondAttribute="centerY" id="CFR-EO-717"/>
+                            <constraint firstItem="2VO-fD-2ZV" firstAttribute="centerX" secondItem="XgK-To-WyS" secondAttribute="centerX" id="NEj-Qv-1kl"/>
+                            <constraint firstItem="t3V-33-ZGD" firstAttribute="centerX" secondItem="MLB-po-Iig" secondAttribute="centerX" id="PKe-Wb-U9N"/>
+                            <constraint firstItem="MLB-po-Iig" firstAttribute="trailing" secondItem="2VO-fD-2ZV" secondAttribute="trailing" constant="25" id="XXs-Tg-tTp"/>
+                            <constraint firstItem="t3V-33-ZGD" firstAttribute="height" secondItem="XgK-To-WyS" secondAttribute="height" id="ZRo-9C-eNh"/>
+                            <constraint firstItem="t3V-33-ZGD" firstAttribute="width" secondItem="XgK-To-WyS" secondAttribute="width" id="wsD-A7-kMf"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="MLB-po-Iig"/>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicatorView" destination="Z2A-Nc-SGs" id="l4f-UV-2YN"/>
+                        <outlet property="btnSelectCardTypes" destination="Yne-OO-NZO" id="gGP-4r-4jV"/>
+                        <outlet property="loadingView" destination="t3V-33-ZGD" id="t8n-xQ-zqg"/>
+                        <outlet property="txtAmount" destination="YPh-gE-vmV" id="sGP-MC-m3P"/>
+                        <outlet property="txtEmail" destination="e8f-oB-tnS" id="5F8-A9-lgh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="133.00492610837438"/>
+        </scene>
+    </scenes>
+</document>
