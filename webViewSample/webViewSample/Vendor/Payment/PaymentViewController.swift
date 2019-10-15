@@ -11,7 +11,7 @@ import WebKit
 
 //MARK: PaymentDelegate protocol
 
-/// Protocol for notifying the completion of the payment process via WebView. PayZenPayment class conform this protocol.
+/// Protocol for notifying the completion of the payment process via WebView. PaymentProvider class conform this protocol.
 protocol PaymentDelegate: class {
     func didPaymentProcessFinish(error: NSError?)
 }
@@ -28,7 +28,7 @@ class PaymentViewController: UIViewController{
     
     //payment process variables
     var urlPayment: String = ""
-    var paymentInfo: PayZenPaymentInformation?
+    var paymentInfo: PaymentInformation?
     weak var paymentDelegate: PaymentDelegate?
     
     var isFirstLoading: Bool = true
@@ -115,7 +115,7 @@ class PaymentViewController: UIViewController{
         return url.contains(URL_CONSTANT_TICKET) || url.contains(URL_CONSTANT_MENTIONS) || url.contains(URL_CONSTANT_PDF) || url.contains(URL_CONSTANT_SECURITY)
     }
     
-    /// Notify end of payment, find payment status and notify to LyraPaymentService
+    /// Notify end of payment, find payment status and notify to PaymentDelegate
     func notifyPaymentFinish(navigationAction: WKNavigationAction){
         let webViewUrlResponse = self.buildWebviewUrlResponse(navigationAction: navigationAction)
         var error: NSError?
@@ -123,11 +123,11 @@ class PaymentViewController: UIViewController{
         case "success":
             error = nil
         case "cancel":
-            error = NSError.init(domain: PayZenPayment.ERROR_DOMAIN, code: PayZenPayment.ERROR_PAYMENT_CANCELATION.errorCode, userInfo: [NSLocalizedFailureReasonErrorKey: PayZenPayment.ERROR_PAYMENT_CANCELATION.errorMsg])
+            error = NSError.init(domain: PaymentProvider.ERROR_DOMAIN, code: PaymentProvider.ERROR_PAYMENT_CANCELATION.errorCode, userInfo: [NSLocalizedFailureReasonErrorKey: PaymentProvider.ERROR_PAYMENT_CANCELATION.errorMsg])
         case "refused":
-            error = NSError.init(domain:PayZenPayment.ERROR_DOMAIN, code: PayZenPayment.ERROR_PAYMENT_REFUSED.errorCode, userInfo: [NSLocalizedFailureReasonErrorKey: PayZenPayment.ERROR_PAYMENT_REFUSED.errorMsg])
+            error = NSError.init(domain:PaymentProvider.ERROR_DOMAIN, code: PaymentProvider.ERROR_PAYMENT_REFUSED.errorCode, userInfo: [NSLocalizedFailureReasonErrorKey: PaymentProvider.ERROR_PAYMENT_REFUSED.errorMsg])
         default:
-            error = NSError.init(domain:PayZenPayment.ERROR_DOMAIN, code: PayZenPayment.ERROR_UNKNOW.errorCode, userInfo: [NSLocalizedFailureReasonErrorKey: PayZenPayment.ERROR_UNKNOW.errorMsg])
+            error = NSError.init(domain:PaymentProvider.ERROR_DOMAIN, code: PaymentProvider.ERROR_UNKNOW.errorCode, userInfo: [NSLocalizedFailureReasonErrorKey: PaymentProvider.ERROR_UNKNOW.errorMsg])
             
         }
         self.dismiss(animated: true) {
@@ -215,11 +215,11 @@ extension PaymentViewController: WKNavigationDelegate{
             decisionHandler(.cancel)
             UIApplication.shared.openURL(navigationAction.request.url!)
             // We detect that a link in expiration page have been cliked
-        }else {
+        }else{
             decisionHandler(.allow)
         }
     }
-    
+
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         //CardIO feature
         //Check HTML, if contains setCardData() javascript function then display CardIO
@@ -233,33 +233,34 @@ extension PaymentViewController: WKNavigationDelegate{
                                     }
         })
     }
+
 }
 
 // MARK: - Extension CardIOPayment delegate
 extension PaymentViewController: CardIOPaymentViewControllerDelegate{
-    
+
     // MARK: CardIO feature methods
-    
+
     func displayCardIoButton(display: Bool){
         if display {
             if(self.cardIoButton == nil){
                 let image = UIImage(named: "cardIo") as UIImage?
                 self.cardIoButton = UIButton(frame: CGRect(x: self.webView.frame.maxX-70, y: self.webView.frame.maxY-70, width: 50, height: 50))
                 self.cardIoButton!.clipsToBounds = true
-                
+
                 self.cardIoButton!.layer.shadowColor = UIColor.black.cgColor
                 self.cardIoButton!.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
                 self.cardIoButton!.layer.masksToBounds = false
                 self.cardIoButton!.layer.shadowRadius = 1.0
                 self.cardIoButton!.layer.shadowOpacity = 0.5
                 self.cardIoButton!.layer.cornerRadius = self.cardIoButton!.frame.width / 2
-                
+
                 self.cardIoButton!.backgroundColor = .white
                 self.cardIoButton!.setImage(image, for: .normal)
                 self.cardIoButton!.contentMode = UIViewContentMode.center
                 self.cardIoButton!.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
                 self.cardIoButton!.addTarget(self, action: #selector(startCardIoScan), for: .touchUpInside)
-                
+
                 self.cardIoButton!.alpha = 0
                 self.view.addSubview(self.cardIoButton!)
             }
@@ -274,7 +275,7 @@ extension PaymentViewController: CardIOPaymentViewControllerDelegate{
             }
         }
     }
-    
+
     @objc func startCardIoScan(){
         /// Create CardIOPaymentViewController object with paymentDelegate to self.
         let cardIOVC = CardIOPaymentViewController(paymentDelegate: self)
@@ -289,13 +290,13 @@ extension PaymentViewController: CardIOPaymentViewControllerDelegate{
         /// Present Card Scanner View modally.
         present(cardIOVC!, animated: true, completion: nil)
     }
-    
+
     // MARK: - CardIO delegate methods
-    
+
     func userDidCancel(_ paymentViewController: CardIOPaymentViewController!) {
         paymentViewController.dismiss(animated: true, completion: nil)
     }
-    
+
     func userDidProvide(_ cardInfo: CardIOCreditCardInfo!, in paymentViewController: CardIOPaymentViewController!) {
         if let info = cardInfo {
             let values = "\(info.cardNumber ?? "cardNumber")|\(info.expiryMonth)|\(info.expiryYear)"
@@ -304,3 +305,4 @@ extension PaymentViewController: CardIOPaymentViewControllerDelegate{
         paymentViewController.dismiss(animated: true, completion: nil)
     }
 }
+

@@ -12,7 +12,7 @@
 		A66D4B35214A6B19000A9334 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A66D4B33214A6B19000A9334 /* Main.storyboard */; };
 		A66D4B37214A6B1B000A9334 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A66D4B36214A6B1B000A9334 /* Assets.xcassets */; };
 		A66D4B3A214A6B1B000A9334 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A66D4B38214A6B1B000A9334 /* LaunchScreen.storyboard */; };
-		A66D4B4E214A6C16000A9334 /* PayZenPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66D4B46214A6C16000A9334 /* PayZenPayment.swift */; };
+		A66D4B4E214A6C16000A9334 /* PaymentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66D4B46214A6C16000A9334 /* PaymentProvider.swift */; };
 		A66D4B51214A6C16000A9334 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66D4B4A214A6C16000A9334 /* PaymentViewController.swift */; };
 		EE37C99E313F6982B9B9AF1A /* Pods_webViewSample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199C7D12A2CC94629784465E /* Pods_webViewSample.framework */; };
 /* End PBXBuildFile section */
@@ -28,7 +28,7 @@
 		A66D4B36214A6B1B000A9334 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A66D4B39214A6B1B000A9334 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A66D4B3B214A6B1B000A9334 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A66D4B46214A6C16000A9334 /* PayZenPayment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayZenPayment.swift; sourceTree = "<group>"; };
+		A66D4B46214A6C16000A9334 /* PaymentProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentProvider.swift; sourceTree = "<group>"; };
 		A66D4B4A214A6C16000A9334 /* PaymentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
 		A6D5A7C82153A5D400A367BB /* webViewSample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "webViewSample-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -89,18 +89,18 @@
 		A66D4B41214A6C16000A9334 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				A66D4B42214A6C16000A9334 /* PayZenPayment */,
+				A66D4B42214A6C16000A9334 /* Payment */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
 		};
-		A66D4B42214A6C16000A9334 /* PayZenPayment */ = {
+		A66D4B42214A6C16000A9334 /* Payment */ = {
 			isa = PBXGroup;
 			children = (
-				A66D4B46214A6C16000A9334 /* PayZenPayment.swift */,
+				A66D4B46214A6C16000A9334 /* PaymentProvider.swift */,
 				A66D4B4A214A6C16000A9334 /* PaymentViewController.swift */,
 			);
-			path = PayZenPayment;
+			path = Payment;
 			sourceTree = "<group>";
 		};
 		E968EF8F0B559214A58E692C /* Pods */ = {
@@ -211,7 +211,7 @@
 			files = (
 				A66D4B32214A6B19000A9334 /* ViewController.swift in Sources */,
 				A66D4B30214A6B19000A9334 /* AppDelegate.swift in Sources */,
-				A66D4B4E214A6C16000A9334 /* PayZenPayment.swift in Sources */,
+				A66D4B4E214A6C16000A9334 /* PaymentProvider.swift in Sources */,
 				A66D4B51214A6C16000A9334 /* PaymentViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
