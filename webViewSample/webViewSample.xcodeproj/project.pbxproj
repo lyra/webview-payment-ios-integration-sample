@@ -12,7 +12,7 @@
 		A66D4B35214A6B19000A9334 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A66D4B33214A6B19000A9334 /* Main.storyboard */; };
 		A66D4B37214A6B1B000A9334 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A66D4B36214A6B1B000A9334 /* Assets.xcassets */; };
 		A66D4B3A214A6B1B000A9334 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A66D4B38214A6B1B000A9334 /* LaunchScreen.storyboard */; };
-		A66D4B4E214A6C16000A9334 /* PayZenPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66D4B46214A6C16000A9334 /* PayZenPayment.swift */; };
+		A66D4B4E214A6C16000A9334 /* PaymentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66D4B46214A6C16000A9334 /* PaymentProvider.swift */; };
 		A66D4B51214A6C16000A9334 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66D4B4A214A6C16000A9334 /* PaymentViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -24,7 +24,7 @@
 		A66D4B36214A6B1B000A9334 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A66D4B39214A6B1B000A9334 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A66D4B3B214A6B1B000A9334 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A66D4B46214A6C16000A9334 /* PayZenPayment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayZenPayment.swift; sourceTree = "<group>"; };
+		A66D4B46214A6C16000A9334 /* PaymentProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentProvider.swift; sourceTree = "<group>"; };
 		A66D4B4A214A6C16000A9334 /* PaymentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -72,18 +72,18 @@
 		A66D4B41214A6C16000A9334 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				A66D4B42214A6C16000A9334 /* PayZenPayment */,
+				A66D4B42214A6C16000A9334 /* Payment */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
 		};
-		A66D4B42214A6C16000A9334 /* PayZenPayment */ = {
+		A66D4B42214A6C16000A9334 /* Payment */ = {
 			isa = PBXGroup;
 			children = (
-				A66D4B46214A6C16000A9334 /* PayZenPayment.swift */,
+				A66D4B46214A6C16000A9334 /* PaymentProvider.swift */,
 				A66D4B4A214A6C16000A9334 /* PaymentViewController.swift */,
 			);
-			path = PayZenPayment;
+			path = Payment;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -159,7 +159,7 @@
 			files = (
 				A66D4B32214A6B19000A9334 /* ViewController.swift in Sources */,
 				A66D4B30214A6B19000A9334 /* AppDelegate.swift in Sources */,
-				A66D4B4E214A6C16000A9334 /* PayZenPayment.swift in Sources */,
+				A66D4B4E214A6C16000A9334 /* PaymentProvider.swift in Sources */,
 				A66D4B51214A6C16000A9334 /* PaymentViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

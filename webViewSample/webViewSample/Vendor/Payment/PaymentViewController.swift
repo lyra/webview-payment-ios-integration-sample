@@ -11,7 +11,7 @@ import WebKit
 
 //MARK: PaymentDelegate protocol
 
-/// Protocol for notifying the completion of the payment process via WebView. PayZenPayment class conform this protocol.
+/// Protocol for notifying the completion of the payment process via WebView. PaymentProvider class conform this protocol.
 protocol PaymentDelegate: class {
     func didPaymentProcessFinish(error: NSError?)
 }
@@ -27,7 +27,7 @@ class PaymentViewController: UIViewController{
     
     //payment process variables
     var urlPayment: String = ""
-    var paymentInfo: PayZenPaymentInformation?
+    var paymentInfo: PaymentInformation?
     weak var paymentDelegate: PaymentDelegate?
     
     var isFirstLoading: Bool = true
@@ -114,7 +114,7 @@ class PaymentViewController: UIViewController{
         return url.contains(URL_CONSTANT_TICKET) || url.contains(URL_CONSTANT_MENTIONS) || url.contains(URL_CONSTANT_PDF) || url.contains(URL_CONSTANT_SECURITY)
     }
     
-    /// Notify end of payment, find payment status and notify to LyraPaymentService
+    /// Notify end of payment, find payment status and notify to PaymentDelegate
     func notifyPaymentFinish(navigationAction: WKNavigationAction){
         let webViewUrlResponse = self.buildWebviewUrlResponse(navigationAction: navigationAction)
         var error: NSError?
@@ -122,11 +122,11 @@ class PaymentViewController: UIViewController{
         case "success":
             error = nil
         case "cancel":
-            error = NSError.init(domain: PayZenPayment.ERROR_DOMAIN, code: PayZenPayment.ERROR_PAYMENT_CANCELATION.errorCode, userInfo: [NSLocalizedFailureReasonErrorKey: PayZenPayment.ERROR_PAYMENT_CANCELATION.errorMsg])
+            error = NSError.init(domain: PaymentProvider.ERROR_DOMAIN, code: PaymentProvider.ERROR_PAYMENT_CANCELATION.errorCode, userInfo: [NSLocalizedFailureReasonErrorKey: PaymentProvider.ERROR_PAYMENT_CANCELATION.errorMsg])
         case "refused":
-            error = NSError.init(domain:PayZenPayment.ERROR_DOMAIN, code: PayZenPayment.ERROR_PAYMENT_REFUSED.errorCode, userInfo: [NSLocalizedFailureReasonErrorKey: PayZenPayment.ERROR_PAYMENT_REFUSED.errorMsg])
+            error = NSError.init(domain:PaymentProvider.ERROR_DOMAIN, code: PaymentProvider.ERROR_PAYMENT_REFUSED.errorCode, userInfo: [NSLocalizedFailureReasonErrorKey: PaymentProvider.ERROR_PAYMENT_REFUSED.errorMsg])
         default:
-            error = NSError.init(domain:PayZenPayment.ERROR_DOMAIN, code: PayZenPayment.ERROR_UNKNOW.errorCode, userInfo: [NSLocalizedFailureReasonErrorKey: PayZenPayment.ERROR_UNKNOW.errorMsg])
+            error = NSError.init(domain:PaymentProvider.ERROR_DOMAIN, code: PaymentProvider.ERROR_UNKNOW.errorCode, userInfo: [NSLocalizedFailureReasonErrorKey: PaymentProvider.ERROR_UNKNOW.errorMsg])
             
         }
         self.dismiss(animated: true) {

@@ -2,7 +2,7 @@
 
 ## Summary
 
-Based on [PayZen](https://payzen.io), the aim of this repository is to explain how mobile payment by [Lyra Network](https://www.lyra-network.com/) webview can be done easily.
+The aim of this repository is to explain how webview mobile payment integration can be done easily.
 
 ## Table of contents
 
@@ -16,12 +16,10 @@ Based on [PayZen](https://payzen.io), the aim of this repository is to explain h
 <span id="how_it_is_work"></span>
 ## How it works
 
-To be able to do some payments with PayZen, two elements are required:
+To be able to do some payments, two elements are required:
 * A contract with your Payment service provider.
-* A mobile app with a PayZen integration: this integration is explained with this repository.
-* A merchant server that executes payments transactions with PayZen servers: [merchant server demonstration](https://github.com/lyra/webview-payment-sparkjava-integration-sample).
-
-More information about implementation on our online documentation https://payzen.io/fr-FR/form-payment/m-payment/sitemap.html
+* A mobile app with a webview mobile payment integration: this integration is explained with this repository.
+* A merchant server that executes payments transactions with Payment servers: [merchant server demonstration](https://github.com/lyra/webview-payment-sparkjava-integration-sample).
 
 <span id="getting_started"></span>
 ## Getting started
@@ -32,13 +30,13 @@ Two quick start options are available: executes this sample or integrates into y
 
 ### Execute this sample
 
-1. See merchant server repo, `https://github.com/lyra/webview-payment-sparkjava-integration-sample`. Follow steps of getting started chapter and run your server
+1. See merchant server repo, `https://github.com/lyra/webview-payment-sparkjava-integration-sample`. Follow steps of getting started chapter and run your server.
 
 2. Clone the repo, `git clone https://github.com/lyra/webview-payment-ios-integration-sample.git`.
 
 3. Open the application with Xcode.
 
-4. In PayZenPayment.swift class, modify the SERVER_URL value according your merchant server url.
+4. In PaymentProvider.swift class, modify the SERVER_URL value according your merchant server url.
 
 5. Run the application.
 
@@ -47,14 +45,14 @@ Two quick start options are available: executes this sample or integrates into y
 
 1. See merchant server repo, `https://github.com/lyra/webview-payment-sparkjava-integration-sample`. Follow steps of getting started chapter and run your server
 
-2. Download PayZenPayment.swift and PaymentViewController.swift files, and import it your xcode project.
+2. Download PaymentProvider.swift and PaymentViewController.swift files, and import it your Xcode project.
 
-3. In PayZenPayment.swift class, modify the SERVER_URL value according your merchant server url.
+3. In PaymentProvider.swift class, modify the SERVER_URL value according your merchant server url.
 
-4. Make the class from which the payment will be launched conforms the PayZenPaymentDelegate protocol. The didPaymentServiceFinish method tells the delegate that the payment is finish. An optional NSError value is used to indicate that the payment has not been made and the corresponding error message. Otherwise, the payment has been successfully completed.
+4. Make the class from which the payment will be launched conforms the PaymentProviderDelegate protocol. The didPaymentServiceFinish method tells the delegate that the payment is finish. An optional NSError value is used to indicate that the payment has not been made and the corresponding error message. Otherwise, the payment has been successfully completed.
 
     ```swift
-    extension ViewController: PayZenPaymentDelegate{
+    extension ViewController: PaymentProviderDelegate {
         /// Tells the delegate that the payment is finish.
         ///
         /// - Parameter error: An optional NSError value indicating that the payment has not been made and the corresponding error message. Otherwise, the payment has been successfully completed.
@@ -67,34 +65,35 @@ Two quick start options are available: executes this sample or integrates into y
 
 5. Call the execute method to trigger the payment process. For this:
 
-	5.1. Create PayZenPaymentInformation object with required information for payment process:
+	5.1. Create PaymentInformation object with required information for payment process:
 	* email: *optional*, email
    * amount: *mandatory*, the related amount
    * mode: *mandatory*, TEST or PRODUCTION (your targeted environment)
    * lang: *mandatory*, the language in which you want the payment pages to be displayed. 
    * cardType: *optional*, can be CB, VISA, MASTERCARD, so on. If no provided, any card type will be proposed
    * currency: *mandatory*, currency code, https://en.wikipedia.org/wiki/ISO_4217
+   
 	
 	```swift
-	let paymentInfo = PayZenPaymentInformation(email: txtEmail.text!, amount: txtAmount.text!, mode: "TEST", lang: language, cardType: selectedCardType!, currency:"978")
+	let paymentInfo = PaymentInformation(email: txtEmail.text!, amount: txtAmount.text!, mode: "TEST", lang: language, cardType: selectedCardType!, currency:"978")
 	```
 	
-	5.2. Create PayZenPayment instance.
+	5.2. Create a PaymentProvider instance.
 	
 	```swift
-	payZenPayment = PayZenPayment(paymentInfo: paymentInfo)
+	paymentProvider = PaymentProvider(paymentInfo: paymentInfo)
 	```
 	
-	5.3. Set PayZenPaymentDelegate. The class must implement the protocol PayZenPaymentDelegate to receive notifications of the completion of the payment process.
+	5.3. Set PaymentProviderDelegate. The class must implement the protocol PaymentProviderDelegate to receive notifications of the completion of the payment process.
 	
 	```swift
-	payZenPayment?.payZenPaymentDelegate = self
+	paymentProvider?.paymentProviderDelegate = self
 	```
 	
 	5.4. Calling the execute method to trigger the payment process.
 	
 	```swift
-	payZenPayment?.execute(contextView: self)
+	paymentProvider?.execute(contextView: self)
 	```
 
 <span id="features"></span>
@@ -108,7 +107,7 @@ In the branch below, you can see a demonstration of credit card scanning by mobi
 
 https://github.com/lyra/webview-payment-ios-integration-sample/tree/card_scanning/
 
-**Please, notice that the library used for this additional feature is not developped by Lyra Network. Lyra Network does not guarantee and is not responsible for the quality of this external library.**
+**Please, notice that the library used for this additional feature is not developped by our company. We do do not guarantee and are not responsible for the quality of this external library.**
 **Moreover, be aware that the use of this librairy is not PCI-DSS compliant.**
 
 <span id="technology"></span>	

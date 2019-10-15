@@ -1,5 +1,5 @@
 //
-//  PayZenPayment.swift
+//  PaymentProvider.swift
 //  lyraInAppDemo
 //
 //  Created by Lyra Network on 07/09/2018.
@@ -9,9 +9,9 @@
 import Foundation
 import WebKit
 
-//Mark: - PayZenPaymentInformation struct
+//Mark: - PaymentInformation struct
 
-struct PayZenPaymentInformation {
+struct PaymentInformation {
     
     var email: String
     var amount: String
@@ -32,10 +32,10 @@ struct PayZenPaymentInformation {
     }
 }
     
-//MARK: - PayZenPaymentDelegate protocol
+//MARK: - PaymentProviderDelegate protocol
 
 /// Protocol for notifying the completion of the payment process. Client applications must conform this protocol.
-protocol PayZenPaymentDelegate: class {
+protocol PaymentProviderDelegate: class {
     
     /// Method to notifying classes that conform the protocol when the payment process is complete
     ///
@@ -43,14 +43,14 @@ protocol PayZenPaymentDelegate: class {
     func didPaymentServiceFinish(error: NSError?)
 }
 
-//MARK: - PayZenPayment class
+//MARK: - PaymentProvider class
 
 /// Encapsulate the functionalities related to the payment process. Client applications should create an instance of this class and invoke the executePayment method.
-class PayZenPayment: PaymentDelegate {
+class PaymentProvider: PaymentDelegate {
     
     //MARK: - Variables
-    var paymentInfo: PayZenPaymentInformation
-    weak var payZenPaymentDelegate: PayZenPaymentDelegate?
+    var paymentInfo: PaymentInformation
+    weak var paymentProviderDelegate: PaymentProviderDelegate?
     
     //MARK: - Error Code
     static let ERROR_DOMAIN = "com.lyra.InApp"
@@ -67,7 +67,7 @@ class PayZenPayment: PaymentDelegate {
     static let SERVER_URL = "<REPLACE_ME>"
     
     //MARK: - Initializer
-    init(paymentInfo: PayZenPaymentInformation) {
+    init(paymentInfo: PaymentInformation) {
         self.paymentInfo = paymentInfo
     }
     
@@ -77,7 +77,7 @@ class PayZenPayment: PaymentDelegate {
     ///
     /// - Returns: URLRequest object
     func buildRequest() -> URLRequest? {
-        let serverUrl: NSURL = NSURL(string: PayZenPayment.SERVER_URL)!
+        let serverUrl: NSURL = NSURL(string: PaymentProvider.SERVER_URL)!
         var urlRequest = URLRequest(url:serverUrl as URL)
         urlRequest.httpMethod = "POST"
         var params: [String: String] = ["amount": paymentInfo.amount, "currency": paymentInfo.currency, "mode": paymentInfo.mode, "language": paymentInfo.lang]
@@ -109,7 +109,7 @@ class PayZenPayment: PaymentDelegate {
         if let request = urlRequest{
             let task = URLSession.shared.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
                 if error != nil{
-                    completion(false, "", NSError.init(domain:PayZenPayment.ERROR_DOMAIN, code: PayZenPayment.ERROR_NO_CONNECTION.errorCode, userInfo: [NSLocalizedFailureReasonErrorKey: PayZenPayment.ERROR_NO_CONNECTION.errorMsg]))
+                    completion(false, "", NSError.init(domain:PaymentProvider.ERROR_DOMAIN, code: PaymentProvider.ERROR_NO_CONNECTION.errorCode, userInfo: [NSLocalizedFailureReasonErrorKey: PaymentProvider.ERROR_NO_CONNECTION.errorMsg]))
                 }
                 if let httpResponse = response as? HTTPURLResponse {
                     let json = try? JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
@@ -123,18 +123,18 @@ class PayZenPayment: PaymentDelegate {
                     case 200:
                         completion(true, redirectionUrl, nil)
                     case 400, 500:
-                        completion(false, "", NSError.init(domain:PayZenPayment.ERROR_DOMAIN, code: PayZenPayment.ERROR_SERVER.errorCode, userInfo: [NSLocalizedFailureReasonErrorKey: PayZenPayment.ERROR_SERVER.errorMsg + errorMsg]) )
+                        completion(false, "", NSError.init(domain:PaymentProvider.ERROR_DOMAIN, code: PaymentProvider.ERROR_SERVER.errorCode, userInfo: [NSLocalizedFailureReasonErrorKey: PaymentProvider.ERROR_SERVER.errorMsg + errorMsg]) )
                     default:
-                        completion(false, "", NSError.init(domain:PayZenPayment.ERROR_DOMAIN, code: PayZenPayment.ERROR_UNKNOW.errorCode, userInfo: [NSLocalizedFailureReasonErrorKey: PayZenPayment.ERROR_UNKNOW.errorMsg]))
+                        completion(false, "", NSError.init(domain:PaymentProvider.ERROR_DOMAIN, code: PaymentProvider.ERROR_UNKNOW.errorCode, userInfo: [NSLocalizedFailureReasonErrorKey: PaymentProvider.ERROR_UNKNOW.errorMsg]))
                     }
                 }
                 else{
-                    completion(false, "", NSError.init(domain:PayZenPayment.ERROR_DOMAIN, code: PayZenPayment.ERROR_TIMEOUT.errorCode, userInfo: [NSLocalizedFailureReasonErrorKey: PayZenPayment.ERROR_TIMEOUT.errorMsg]))
+                    completion(false, "", NSError.init(domain:PaymentProvider.ERROR_DOMAIN, code: PaymentProvider.ERROR_TIMEOUT.errorCode, userInfo: [NSLocalizedFailureReasonErrorKey: PaymentProvider.ERROR_TIMEOUT.errorMsg]))
                 }
             }
             task.resume()
         } else{
-            completion(false, "", NSError.init(domain:PayZenPayment.ERROR_DOMAIN, code: PayZenPayment.ERROR_UNKNOW.errorCode, userInfo: [NSLocalizedFailureReasonErrorKey: PayZenPayment.ERROR_UNKNOW.errorMsg]))
+            completion(false, "", NSError.init(domain:PaymentProvider.ERROR_DOMAIN, code: PaymentProvider.ERROR_UNKNOW.errorCode, userInfo: [NSLocalizedFailureReasonErrorKey: PaymentProvider.ERROR_UNKNOW.errorMsg]))
         }
     }
     
@@ -147,9 +147,9 @@ class PayZenPayment: PaymentDelegate {
         getPaymentContext { paymentContextGetted, redirectUrl, error in
             if !paymentContextGetted {
                 if let error = error{
-                    self.payZenPaymentDelegate?.didPaymentServiceFinish(error: error)
+                    self.paymentProviderDelegate?.didPaymentServiceFinish(error: error)
                 }else{
-                    self.payZenPaymentDelegate?.didPaymentServiceFinish(error: NSError.init(domain:PayZenPayment.ERROR_DOMAIN, code: PayZenPayment.ERROR_UNKNOW.errorCode, userInfo: [NSLocalizedFailureReasonErrorKey: PayZenPayment.ERROR_UNKNOW.errorMsg]))
+                    self.paymentProviderDelegate?.didPaymentServiceFinish(error: NSError.init(domain:PaymentProvider.ERROR_DOMAIN, code: PaymentProvider.ERROR_UNKNOW.errorCode, userInfo: [NSLocalizedFailureReasonErrorKey: PaymentProvider.ERROR_UNKNOW.errorMsg]))
                 }
             } else{
                 DispatchQueue.main.async(){
@@ -166,7 +166,7 @@ class PayZenPayment: PaymentDelegate {
     
     //MARK: - PaymentDelegate methos
     func didPaymentProcessFinish(error: NSError?) {
-        payZenPaymentDelegate?.didPaymentServiceFinish(error: error)
+        paymentProviderDelegate?.didPaymentServiceFinish(error: error)
     }
     
 }

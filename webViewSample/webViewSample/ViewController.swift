@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet weak var loadingView: UIView!
     
-    var payZenPayment: PayZenPayment?
+    var paymentProvider: PaymentProvider?
     
     //MARK: - ViewController life cycle methods
     override func viewDidLoad() {
@@ -43,20 +43,20 @@ class ViewController: UIViewController {
         self.loadingView.isHidden = false
         self.activityIndicatorView.startAnimating()
         
-        //MARK: PayZen Payment Integration Code
+        //MARK: Webview Mobile Payment Integration Code
         
-        //1.Create PayZenPaymentInformation object with required information for payment process
-        //There are two options for the mode: TEST and PRODUCTION
-        let paymentInfo = PayZenPaymentInformation(email: txtEmail.text!, amount: txtAmount.text!, mode: "TEST", lang: language, cardType: selectedCardType!, currency:"978")
+        //1.Create PaymentInformation object with required information for payment process
+        //There are two options for the mode: TEST or PRODUCTION
+        let paymentInfo = PaymentInformation(email: txtEmail.text!, amount: txtAmount.text!, mode: "TEST", lang: language, cardType: selectedCardType!, currency:"978")
         
-        //2.Create PayZenPayment instance
-        payZenPayment = PayZenPayment(paymentInfo: paymentInfo)
+        //2.Create a PaymentProvider instance
+        paymentProvider = PaymentProvider(paymentInfo: paymentInfo)
         
-        //3.Set PayZenPaymentDelegate. The class must implement the protocol PayZenPaymentDelegate to receive notifications of the completion of the payment process.
-        payZenPayment?.payZenPaymentDelegate = self
+        //3.Set PaymentProviderDelegate. The class must implement the protocol PaymentProviderDelegate to receive notifications of the completion of the payment process.
+        paymentProvider?.paymentProviderDelegate = self
         
         //4.Calling the execute method to trigger the payment process.
-        payZenPayment?.execute(contextView: self)
+        paymentProvider?.execute(contextView: self)
     }
     
     /// Action method for the select card type button. Displays a UIAlertController with card types to select.
@@ -87,7 +87,7 @@ class ViewController: UIViewController {
 
 //MARK: - Extensions
 
-extension ViewController: PayZenPaymentDelegate{
+extension ViewController: PaymentProviderDelegate {
     /// Tells the delegate that the payment is finish.
     ///
     /// - Parameter error: An optional NSError value indicating that the payment has not been made and the corresponding error message. Otherwise, the payment has been successfully completed.
