@@ -35,7 +35,7 @@ struct PaymentInformation {
 //MARK: - PaymentProviderDelegate protocol
 
 /// Protocol for notifying the completion of the payment process. Client applications must conform this protocol.
-protocol PaymentProviderDelegate: class {
+protocol PaymentProviderDelegate: AnyObject {
     
     /// Method to notifying classes that conform the protocol when the payment process is complete
     ///
@@ -116,8 +116,8 @@ class PaymentProvider: PaymentDelegate {
                     var redirectionUrl = ""
                     var errorMsg = ""
                     if let jsonResponse = json {
-                        redirectionUrl = (jsonResponse!["redirectionUrl"] as? String)!
-                        errorMsg = (jsonResponse!["errorMessage"] as? String)!
+                        redirectionUrl = (jsonResponse["redirectionUrl"] as? String)!
+                        errorMsg = (jsonResponse["errorMessage"] as? String)!
                     }
                     switch(httpResponse.statusCode){
                     case 200:
@@ -157,6 +157,7 @@ class PaymentProvider: PaymentDelegate {
                     controller.paymentInfo = self.paymentInfo
                     controller.urlPayment = redirectUrl
                     controller.paymentDelegate = self
+                    controller.modalPresentationStyle = .fullScreen
                     contextView.present(controller, animated: true, completion: nil)
                 }
             }
