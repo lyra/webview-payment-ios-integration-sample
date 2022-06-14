@@ -64,13 +64,13 @@ class ViewController: UIViewController {
         
         let cardTypesController = UIAlertController(title: "Cards Types", message: "Select the supported card types", preferredStyle: .actionSheet)
         
-        let allCardSupportedAction = UIAlertAction(title: "All", style: .default, handler:{(action) -> Void in  self.btnSelectCardTypes.setTitle("All", for: UIControlState.normal)
+        let allCardSupportedAction = UIAlertAction(title: "All", style: .default, handler:{(action) -> Void in  self.btnSelectCardTypes.setTitle("All", for: UIControl.State.normal)
         })
         
-        let visaCardSupportedAction = UIAlertAction(title: "Visa", style: .default, handler:{(action) -> Void in  self.btnSelectCardTypes.setTitle("Visa", for: UIControlState.normal)
+        let visaCardSupportedAction = UIAlertAction(title: "Visa", style: .default, handler:{(action) -> Void in  self.btnSelectCardTypes.setTitle("Visa", for: UIControl.State.normal)
         })
         
-        let mastercardCardSupportedAction = UIAlertAction(title: "Mastercard", style: .default, handler:{(action) -> Void in  self.btnSelectCardTypes.setTitle("Mastercard", for: UIControlState.normal)
+        let mastercardCardSupportedAction = UIAlertAction(title: "Mastercard", style: .default, handler:{(action) -> Void in  self.btnSelectCardTypes.setTitle("Mastercard", for: UIControl.State.normal)
         })
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler:nil)
@@ -101,7 +101,7 @@ extension ViewController: PaymentProviderDelegate {
                 message = "Payment failed. \(error.userInfo[NSLocalizedFailureReasonErrorKey] as! String)"
                 
             }
-            let alert = UIAlertController(title: "Information", message: message, preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Information", message: message, preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler:nil))
             self.present(alert, animated: true, completion: nil)
         }

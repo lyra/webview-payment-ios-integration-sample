@@ -12,7 +12,7 @@ import WebKit
 //MARK: PaymentDelegate protocol
 
 /// Protocol for notifying the completion of the payment process via WebView. PaymentProvider class conform this protocol.
-protocol PaymentDelegate: class {
+protocol PaymentDelegate: AnyObject {
     func didPaymentProcessFinish(error: NSError?)
 }
 
@@ -51,14 +51,13 @@ class PaymentViewController: UIViewController{
         let req = NSURLRequest(url:url! as URL)
         
         // We create and load a webview pointing to this Url
-        self.automaticallyAdjustsScrollViewInsets = false
         self.navigationController?.isNavigationBarHidden = true;
         self.webView!.load(req as URLRequest)
-        self.webView.addObserver(self, forKeyPath: #keyPath(WKWebView.loading), options: .new, context: nil)
+        self.webView.addObserver(self, forKeyPath: #keyPath(WKWebView.isLoading), options: .new, context: nil)
     }
     
     deinit{
-        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.loading))
+        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.isLoading))
         webView.navigationDelegate = nil
         webView.scrollView.delegate = nil
         webView.removeFromSuperview()
@@ -71,7 +70,7 @@ class PaymentViewController: UIViewController{
         self.webView = WKWebView()
         self.webView.navigationDelegate = self
         self.webView.scrollView.frame = self.webView.frame
-        self.webView.scrollView.contentInset = UIEdgeInsetsMake(20,0,0,0)
+        self.webView.scrollView.contentInset = UIEdgeInsets.init(top:20, left:0, bottom:0, right:0)
         self.webView.scrollView.delegate = self
         self.webView.scrollView.bounces = false
         self.webView.allowsBackForwardNavigationGestures = true   // Enable/Disable swiping to navigate
@@ -161,15 +160,15 @@ class PaymentViewController: UIViewController{
         
         self.hideActivityIndicator()
         //create activity indicator view
-        activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        activityIndicatorView = UIActivityIndicatorView(style: .gray)
         activityIndicatorView?.color = UIColor.black
         activityIndicatorView?.hidesWhenStopped = true
         //adding activity indicator in view
         self.view.addSubview(activityIndicatorView!)
         //adding constraint to activity indicator for center in view
         activityIndicatorView?.translatesAutoresizingMaskIntoConstraints = false
-        view.addConstraint(NSLayoutConstraint(item: activityIndicatorView!, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: activityIndicatorView!, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerY, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: activityIndicatorView!, attribute: NSLayoutConstraint.Attribute.centerX, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.centerX, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: activityIndicatorView!, attribute: NSLayoutConstraint.Attribute.centerY, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.centerY, multiplier: 1, constant: 0))
         
         //starting activity indicator
         activityIndicatorView?.startAnimating()
@@ -212,7 +211,7 @@ extension PaymentViewController: WKNavigationDelegate{
             // We detect a page that should be open in a separate browser
         }else if isUrlToOpenedSeparately(url: (navigationAction.request.url?.absoluteString)!) {
             decisionHandler(.cancel)
-            UIApplication.shared.openURL(navigationAction.request.url!)
+            UIApplication.shared.open(navigationAction.request.url!)
             // We detect that a link in expiration page have been cliked
         }else{
             decisionHandler(.allow)
